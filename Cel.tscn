@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://bnqabxftg0b06"]
+
+[ext_resource type="Script" path="res://cel.gd" id="1_5dxqh"]
+[ext_resource type="Material" path="res://materials/mudCracked/mud.tres" id="2_u33k4"]
+[ext_resource type="Script" path="res://area_3d.gd" id="3_u6apb"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_vhca6"]
+
+[sub_resource type="Skin" id="Skin_o8llf"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ikepx"]
+
+[node name="Cel" type="Node3D"]
+script = ExtResource("1_5dxqh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("2_u33k4")
+mesh = SubResource("SphereMesh_vhca6")
+skin = SubResource("Skin_o8llf")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D" groups=["Cele"]]
+script = ExtResource("3_u6apb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+shape = SubResource("SphereShape3D_ikepx")
+
+[connection signal="target_hit" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_target_hit"]

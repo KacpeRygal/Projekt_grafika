@@ -1,0 +1,47 @@
+[gd_scene load_steps=11 format=3 uid="uid://dbqegv37rvjhv"]
+
+[ext_resource type="Script" path="res://gracz.gd" id="1_bvdiy"]
+[ext_resource type="Texture2D" uid="uid://c1minlcj3petx" path="res://materials/mudCracked/Cracked_Mud_001_ROUGH.jpg" id="1_oiomi"]
+[ext_resource type="Script" path="res://main_scene.gd" id="1_u240v"]
+[ext_resource type="Material" path="res://materials/mudCracked/mud.tres" id="2_1smk6"]
+[ext_resource type="PackedScene" uid="uid://bnqabxftg0b06" path="res://Cel.tscn" id="2_g6ehd"]
+[ext_resource type="Script" path="res://camera_3d.gd" id="4_c6b62"]
+[ext_resource type="PackedScene" uid="uid://bn1es5d42vycu" path="res://pistolet.tscn" id="5_m4sop"]
+[ext_resource type="Script" path="res://spawner.gd" id="8_hy42l"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2o66h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8ygh"]
+next_pass = ExtResource("2_1smk6")
+albedo_texture = ExtResource("1_oiomi")
+
+[node name="MainScene" type="Node3D"]
+script = ExtResource("1_u240v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_2o66h")
+surface_material_override/0 = SubResource("StandardMaterial3D_l8ygh")
+
+[node name="Gracz" type="Node3D" parent="."]
+script = ExtResource("1_bvdiy")
+
+[node name="Glowa" type="Node3D" parent="Gracz"]
+
+[node name="Camera3D" type="Camera3D" parent="Gracz/Glowa"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.132666, 0.258528, 0.641349)
+script = ExtResource("4_c6b62")
+
+[node name="pistolet" parent="Gracz/Glowa/Camera3D" instance=ExtResource("5_m4sop")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000215709, 1.55961, 0.843804)
+light_energy = 3.747
+
+[node name="Cel" parent="." instance=ExtResource("2_g6ehd")]
+
+[node name="Spawner" type="Node3D" parent="."]
+script = ExtResource("8_hy42l")
+
+[node name="Timer" type="Timer" parent="Spawner"]
+
+[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]

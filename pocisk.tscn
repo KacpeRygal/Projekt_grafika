@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dti8ox2hf8i2r"]
+
+[ext_resource type="Script" path="res://pocisk.gd" id="1_pxbgb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_aofqn"]
+size = Vector3(0.002, 0.002, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aa1gr"]
+albedo_color = Color(0.87862, 0.58436, 0.0991231, 1)
+emission_enabled = true
+emission = Color(0.383913, 0.597224, 0.12814, 1)
+emission_energy_multiplier = 5.0
+
+[node name="pocisk" type="Node3D"]
+script = ExtResource("1_pxbgb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_aofqn")
+surface_material_override/0 = SubResource("StandardMaterial3D_aa1gr")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -0.6)
+collide_with_areas = true

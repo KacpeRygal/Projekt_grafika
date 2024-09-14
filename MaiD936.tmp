@@ -1,0 +1,62 @@
+[gd_scene load_steps=12 format=3 uid="uid://ds51duk1mow7f"]
+
+[ext_resource type="Script" path="res://gracz.gd" id="1_bvdiy"]
+[ext_resource type="Texture2D" uid="uid://c1minlcj3petx" path="res://materials/mudCracked/Cracked_Mud_001_ROUGH.jpg" id="1_oiomi"]
+[ext_resource type="Material" path="res://materials/mudCracked/mud.tres" id="2_1smk6"]
+[ext_resource type="PackedScene" uid="uid://bkc6skhvwb5i5" path="res://Cel.tscn" id="2_g6ehd"]
+[ext_resource type="Script" path="res://camera_3d.gd" id="4_c6b62"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2o66h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8ygh"]
+next_pass = ExtResource("2_1smk6")
+albedo_texture = ExtResource("1_oiomi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tvyiw"]
+albedo_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cpbe1"]
+material = SubResource("StandardMaterial3D_tvyiw")
+size = Vector3(0.01, 0.01, 0.1)
+
+[sub_resource type="Skin" id="Skin_cn08h"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_oio0b"]
+
+[node name="MainScene" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_2o66h")
+surface_material_override/0 = SubResource("StandardMaterial3D_l8ygh")
+
+[node name="Gracz" type="Node3D" parent="."]
+script = ExtResource("1_bvdiy")
+
+[node name="Camera3D" type="Camera3D" parent="Gracz"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.132666, 0.258528, 0.641349)
+script = ExtResource("4_c6b62")
+
+[node name="Node3D" type="Node3D" parent="Gracz/Camera3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Gracz/Camera3D/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0243587, -0.0532538, -0.065971)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cpbe1")
+skin = SubResource("Skin_cn08h")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = 549.0
+offset_top = 241.0
+offset_right = 629.0
+offset_bottom = 303.0
+texture = SubResource("CanvasTexture_oio0b")
+stretch_mode = 3
+
+[node name="Node3D" parent="." instance=ExtResource("2_g6ehd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.444679, 0.395244, -1.14514)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000215709, 1.55961, 0.843804)
+light_energy = 3.747
